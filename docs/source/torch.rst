@@ -29,19 +29,18 @@ Tensors
 Creation Ops
 ~~~~~~~~~~~~
 
-.. note::
-    Random sampling creation ops are listed under :ref:`random-sampling` and
-    include:
-    :func:`torch.rand`
-    :func:`torch.rand_like`
-    :func:`torch.randn`
-    :func:`torch.randn_like`
-    :func:`torch.randint`
-    :func:`torch.randint_like`
-    :func:`torch.randperm`
-    You may also use :func:`torch.empty` with the :ref:`inplace-random-sampling`
-    methods to create :class:`torch.Tensor` s with values sampled from a broader
-    range of distributions.
+* Random sampling creation ops
+    * listed as :ref:`random-sampling`
+    * include
+        * :func:`torch.rand`
+        * :func:`torch.rand_like`
+        * :func:`torch.randn`
+        * :func:`torch.randn_like`
+        * :func:`torch.randint`
+        * :func:`torch.randint_like`
+        * :func:`torch.randperm`
+    * :func:`torch.empty` + :ref:`inplace-random-sampling` methods -> allows create :class:`torch.Tensor` s /
+        * 's values sampled -- from a -- broader range of distributions
 
 .. autosummary::
     :toctree: generated
@@ -145,11 +144,12 @@ Indexing, Slicing, Joining, Mutating Ops
 
 Accelerators
 ----------------------------------
-Within the PyTorch repo, we define an "Accelerator" as a :class:`torch.device` that is being used
-alongside a CPU to speed up computation. These devices use an asynchronous execution scheme,
-using :class:`torch.Stream` and :class:`torch.Event` as their main way to perform synchronization.
-We also assume that only one such accelerator can be available at once on a given host. This allows
-us to use the current accelerator as the default device for relevant concepts such as pinned memory,
+* "Accelerator"
+    * == :class:`torch.device` /
+        * \+ CPU, speed up computation
+        * if you want to perform synchronization -> use an asynchronous execution scheme -- via -- :class:`torch.Stream` & :class:`torch.Event`
+    * ONLY 1 accelerator is available / time | given host
+This allows us to use the current accelerator as the default device for relevant concepts such as pinned memory,
 Stream device_type, FSDP, etc.
 
 As of today, accelerator devices are (in no particular order) :doc:`"CUDA" <cuda>`, :doc:`"MTIA" <mtia>`,

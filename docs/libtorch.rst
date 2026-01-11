@@ -1,9 +1,12 @@
 libtorch (C++-only)
 ===================
 
-The core of pytorch does not depend on Python. A
-CMake-based build system compiles the C++ source code into a shared
-object, libtorch.so.
+* core of pytorch
+    * ❌does NOT depend on Python❌
+
+* libtorch.so
+    * == shared object /
+        * built -- via -- CMake-based build system
 
 AMD ROCm Support
 ------------------------------
@@ -17,8 +20,10 @@ If you're compiling for AMD ROCm then first run this command:
 Additional information about ROCm support can be found in the top-level
 `README <https://github.com/pytorch/pytorch/blob/main/README.md>`_.
 
-Building libtorch using Python
+ways to build
 ------------------------------
+-- via -- Python
+::
 
 You can use a python script/module located in tools package to build libtorch
 ::
@@ -47,14 +52,14 @@ To use ninja rather than make, set `CMAKE_GENERATOR="-GNinja" CMAKE_INSTALL="nin
 
 Note that we are working on eliminating tools/build_pytorch_libs.sh in favor of a unified cmake build.
 
-Building libtorch using CMake
---------------------------------------
-
-You can build C++ libtorch.so directly with cmake.  For example, to build a Release version from the main branch and install it in the directory specified by CMAKE_INSTALL_PREFIX below, you can use
+-- via -- CMake
 ::
+
    git clone -b main --recurse-submodule https://github.com/pytorch/pytorch.git
    mkdir pytorch-build
    cd pytorch-build
+
+    # install | CMAKE_INSTALL_PREFIX directory
    cmake -DBUILD_SHARED_LIBS:BOOL=ON -DCMAKE_BUILD_TYPE:STRING=Release -DPYTHON_EXECUTABLE:PATH=`which python3` -DCMAKE_INSTALL_PREFIX:PATH=../pytorch-install ../pytorch
    cmake --build . --target install
 

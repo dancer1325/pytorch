@@ -149,23 +149,31 @@ Accelerators
         * \+ CPU, speed up computation
         * if you want to perform synchronization -> use an asynchronous execution scheme -- via -- :class:`torch.Stream` & :class:`torch.Event`
     * ONLY 1 accelerator is available / time | given host
-This allows us to use the current accelerator as the default device for relevant concepts such as pinned memory,
-Stream device_type, FSDP, etc.
+    * uses
+        * default device -- for -- relevant concepts (pinned memory, Stream device_type, FSDP, etc.)
+    * NO particular order
+        * :doc:`"CUDA" <cuda>`
+        * :doc:`"MTIA" <mtia>`
+        * :doc:`"XPU" <xpu>`
+        * :doc:`"MPS" <mps>`
+        * "HPU"
+        * PrivateUse1
 
-As of today, accelerator devices are (in no particular order) :doc:`"CUDA" <cuda>`, :doc:`"MTIA" <mtia>`,
-:doc:`"XPU" <xpu>`, :doc:`"MPS" <mps>`, "HPU", and PrivateUse1 (many device not in the PyTorch repo itself).
+* if you want to create subprocesses (_Example:_ dataloading OR intra-op parallelism) -> many PyTorch Ecosystem tools use fork
+    * recommendations
+        * delay as much as possible any operation / would prevent further forks
+            * PRETTY important
+                * Reason:🧠most accelerator's initialization has such effect🧠
 
-Many tools in the PyTorch Ecosystem use fork to create subprocesses (for example dataloading
-or intra-op parallelism), it is thus important to delay as much as possible any
-operation that would prevent further forks. This is especially important here as most accelerator's initialization has such effect.
-In practice, you should keep in mind that checking :func:`torch.accelerator.current_accelerator`
-is a compile-time check by default, it is thus always fork-safe.
-On the contrary, passing the ``check_available=True`` flag to this function or calling
-:func:`torch.accelerator.is_available()` will usually prevent later fork.
+* checking :func:`torch.accelerator.current_accelerator`
+    * by default, it's a compile-time check
+        * -> fork-safe
+        * if you pass ``check_available=True`` flag | this function OR calling :func:`torch.accelerator.is_available()` -> prevent later fork
 
-Some backends provide an experimental opt-in option to make the runtime availability
-check fork-safe. When using the CUDA device ``PYTORCH_NVML_BASED_CUDA_CHECK=1`` can be
-used for example.
+* SOME backends
+    * provide
+        * experimental opt-in option / runtime availability check is fork-safe
+            * uses: CUDA device ``PYTORCH_NVML_BASED_CUDA_CHECK=1``
 
 .. autosummary::
     :toctree: generated
